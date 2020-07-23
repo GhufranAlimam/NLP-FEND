@@ -24,4 +24,14 @@ There must be a styles or scss folder. The project provides a base file, but the
 =================================================
 ================= Functionality =================
 =================================================
-1-
+1- The app should make a successful call to the api on form submission. If this is successful, the api keys and response handling were done correctly. You can check that the api keys are found in server.js or a similar node file. It is not acceptable for an api key to be set in a client facing file (like index.js)
+
+Information from the api response must show up in the view. It is not enough for the response to be logged to the console or saved in js, etc..
+
+2- The project must have set up service workers in webpack.
+
+3- Check that the project has Jest installed, that there is an npm script to run Jest, and that the tests all pass. Every src/js file should have at least one test.
+
+4- The page built can be very simple, but should include:
+
+A single field form that uses the correct html tags and structure. There should be some attempt to validate the form input. Bonus points if you use regex to correctly check for a URL and give back helpful error messages.
