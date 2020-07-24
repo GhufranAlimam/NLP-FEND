@@ -22,13 +22,13 @@ You don't have to worry about NLP, because we will make use of an external api c
 - External API - Aylien.
 # Stage 1 - Getting Started - Setting up the Project
 It would be good to first get your basic project up and functioning. Fork the project Github repo, and then clone or download the zip file locally. Remember that once you clone, you will still need to install everything:
-```
+```Javascript
 cd <project directory>
 npm install
 ```
 Note: Do not add service workers just yet. Add them after finishing the development work. 
 Just for your quick reference, you might want to install the following loaders and plugins:
-```
+```Javascript
 // Choose the necessary installation for your development mode
 npm i -D @babel/core @babel/preset-env babel-loader
 npm i -D style-loader node-sass css-loader sass-loader
@@ -52,13 +52,13 @@ Install the SDK in your project, as per the instructions mentioned for Node.js S
 
 Step 3: Require the SDK package
 Your server/index.js file must have these things:
-```
+```Javascript
 // Require the Aylien npm package
 var aylien = require("aylien_textapi");
 ```
 Step 4: Environment Variables
 Next, in server/index.js, you need to declare your API credentials, which will look something like this:
-```
+```Javascript
 // You could call it aylienapi, or anything else
 var textapi = new aylien({
   application_id: "your-api-id",
@@ -71,21 +71,21 @@ The way we will do that is with environment variables. Environment variables are
 1- Use npm to install the dotenv package - npm install dotenv This will allow us to use environment variables we set in a new file.
 2- Create a new .env file in the root of your project.
 3- Fill the .env file with your API keys like this:
-```
+```Javascript
 API_ID=**************************
 API_KEY=**************************
 ```
 4- Add this code to the very top of your server/index.js file:
-```
+```Javascript
 const dotenv = require('dotenv');
 dotenv.config();
 ```
 5- If you want to refer the environment variables, try putting a prefix process.env. in front of the variable name in the server/index.js file, an example might look like this:
-```
+```Javascript
 console.log(`Your API key is ${process.env.API_KEY}`);
 ```
 The step above is just to help you understand how to refer an environment variable from your code. In server/index.js, your updated API credential settings should look like this:
-```
+```Javascript
 // You could call it aylienapi, or anything else
 var textapi = new aylien({
    application_id: process.env.API_ID,
@@ -109,7 +109,7 @@ Jest is a framework for testing JavaScript projects. We are interested in the un
 How does it work?
 1- Install Jest by using npm install --save-dev jest
 2- Write the custom JS in your src/client/js directory, responsible for the server, and form submission task. For example, assume that the /src/client/js/formHandler.js file has the following function to be tested:
-```
+```Javascript
 function handleSubmit(event) {
     event.preventDefault()
     // check what text was put into the form field
@@ -152,7 +152,7 @@ Jest - testing asynchronous code - If you have code that runs asynchronously.
 A tutorial for beginners - A good explanatory tutorial.
 
 4- Configure an npm script named "test" in package.json to run your tests from the command line:
-```
+```Javascript
 "scripts": {
     "test": "jest"
 }
