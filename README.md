@@ -22,12 +22,13 @@ You don't have to worry about NLP, because we will make use of an external api c
 - External API - Aylien.
 # Stage 1 - Getting Started - Setting up the Project
 It would be good to first get your basic project up and functioning. Fork the project Github repo, and then clone or download the zip file locally. Remember that once you clone, you will still need to install everything:
-
+```
 cd <project directory>
 npm install
-
+```
 Note: Do not add service workers just yet. Add them after finishing the development work. 
 Just for your quick reference, you might want to install the following loaders and plugins:
+```
 // Choose the necessary installation for your development mode
 npm i -D @babel/core @babel/preset-env babel-loader
 npm i -D style-loader node-sass css-loader sass-loader
@@ -35,6 +36,7 @@ npm i -D clean-webpack-plugin
 npm i -D html-webpack-plugin
 npm i -D mini-css-extract-plugin
 npm i -D optimize-css-assets-webpack-plugin terser-webpack-plugin
+```
 
 # Stage 2 - Setting up the Aylien API
 The Aylien API has you install a node module to run certain commands through. It will simplify the requests we need to make from our node/express backend. 
@@ -50,44 +52,46 @@ Install the SDK in your project, as per the instructions mentioned for Node.js S
 
 Step 3: Require the SDK package
 Your server/index.js file must have these things:
-
+```
 // Require the Aylien npm package
 var aylien = require("aylien_textapi");
-
+```
 Step 4: Environment Variables
 Next, in server/index.js, you need to declare your API credentials, which will look something like this:
-
+```
 // You could call it aylienapi, or anything else
 var textapi = new aylien({
   application_id: "your-api-id",
   application_key: "your-key"
 });
-
+```
 ...but there's a problem with this. We are about to put our personal API keys into a file, but when we push, this file is going to be available PUBLICLY on Github. Private keys, visible publicly, are never a good thing. So, we have to figure out a way to make that not happen.
 
 The way we will do that is with environment variables. Environment variables are pretty much like normal variables in that they have a name and hold value. The environment variables only belong to your local system and won't be visible when you push your code to a different environment like Github. Follow the steps below to configure environment variables:
 1- Use npm to install the dotenv package - npm install dotenv This will allow us to use environment variables we set in a new file.
 2- Create a new .env file in the root of your project.
 3- Fill the .env file with your API keys like this:
-
+```
 API_ID=**************************
 API_KEY=**************************
-
+```
 4- Add this code to the very top of your server/index.js file:
+```
 const dotenv = require('dotenv');
 dotenv.config();
+```
 5- If you want to refer the environment variables, try putting a prefix process.env. in front of the variable name in the server/index.js file, an example might look like this:
-
+```
 console.log(`Your API key is ${process.env.API_KEY}`);
-
+```
 The step above is just to help you understand how to refer an environment variable from your code. In server/index.js, your updated API credential settings should look like this:
-
+```
 // You could call it aylienapi, or anything else
 var textapi = new aylien({
    application_id: process.env.API_ID,
    application_key: process.env.API_KEY
 });
-
+```
 6- Go to your .gitignore file, in the project root, and add .env. It will make sure that we don't push our environment variables to Github! If you forget this step, all of the work we did to protect our API keys would become pointless.
 
 Step 5: Using the API
@@ -105,7 +109,7 @@ Jest is a framework for testing JavaScript projects. We are interested in the un
 How does it work?
 1- Install Jest by using npm install --save-dev jest
 2- Write the custom JS in your src/client/js directory, responsible for the server, and form submission task. For example, assume that the /src/client/js/formHandler.js file has the following function to be tested:
-
+```
 function handleSubmit(event) {
     event.preventDefault()
     // check what text was put into the form field
@@ -114,7 +118,7 @@ function handleSubmit(event) {
     console.log("::: Form Submitted :::")
 }
 export { handleSubmit }
-
+```
 3- You have to ensure that all your custom functions in src/client/js directory can handle error responses if the user input does not match API requirements. You will write tests in <function_name>.test.js or <function_name>.spec.js file, to be present in a __test__ folder. For each functionality, consider writing a separate test file. The __test__ folder should be present in the project directory.
 
 In each test file, the general flow of the test block should be:
@@ -124,7 +128,7 @@ In each test file, the general flow of the test block should be:
 - Check if the function produces the expected output.
 
 For the example function shown above, /src/client/js/formHandler/handleSubmit(), you can write a test file testFormHandler.spec.js in the __test__ directory, having a test block as:
-
+```Javascript
 // Import the js file to test
 import { handleSubmit } from "../src/client/js/formHandler"
 
@@ -139,7 +143,7 @@ describe("Testing the submit functionality", () => {
            // The general syntax is `expect(myFunction(arg1, arg2, ...)).toEqual(expectedValue);`, where `toEqual()` is a matcher
            expect(handleSubmit).toBeDefined();
 })});
-
+```
 You must be wondering about the matchers, and other syntactical information about test blocks. At this point, you must refer to the external resources:
 
 Jest - Getting started - Provides a basic overview, with the help of an example.
@@ -148,11 +152,11 @@ Jest - testing asynchronous code - If you have code that runs asynchronously.
 A tutorial for beginners - A good explanatory tutorial.
 
 4- Configure an npm script named "test" in package.json to run your tests from the command line:
-
+```
 "scripts": {
     "test": "jest"
 }
-
+```
 Also, ensure that the "devDependencies" in package.json have a suitable entry for Jest and others, such as, "jest": "^25.3.0",, where the version may vary with time.
 
 5- Run the npm run test command.
