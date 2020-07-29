@@ -5,23 +5,24 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors")
 const AYLIENTextAPI = require('aylien_textapi');
-dotenv.config();
+const app = express()
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors())
+dotenv.config({path:path.join(__dirname,'../../.env')});
+
 const textapi = new AYLIENTextAPI({
   application_id: process.env.API_ID,
   application_key: process.env.API_KEY
 });
-const app = express()
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors())
+
 app.use(express.static('dist'))
 
-// console.log(__dirname)
 const PORT = process.env.PORT || 8081;
 
 app.get('/', function (req, res) {
-    res.sendFile('dist/index.html')
-    // res.sendFile(path.resolve('src/client/views/index.html'))
+    res.send('dist/index.html')
 })
 
 app.get('/test', function (req, res) {
@@ -32,19 +33,14 @@ app.get('/test', function (req, res) {
 // })
 
 app.post("/test", function(req,res){
-  // console.log(req.body)
-  // console.log(res)
   textapi.sentiment({
     url: req.body.text,
     mode: 'document'
   }, function(error, response) {
     if (error) {
       console.log(error)
-      res.send() 
     }
-    // console.log(response)
     res.send(response)
-    res.send("YOU got it right")
   });
 })
 app.listen(PORT, function () {

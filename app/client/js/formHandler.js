@@ -1,17 +1,10 @@
 function handleSubmit(event) {
     event.preventDefault()
-    console.log("IM HERE")
     // check what text was put into the form field
     let formText = document.getElementById('name').value
- 
-    // const inputReg = /(https?:\/\/)?([a-z\.-]+)\.(\w{2})([\/\w\.-]*)*\/?/i
-    // if(!inputReg.test(formText) || formText.length === 0){
-    //     alert("Kindly fill up the input with a correct URL")
-    //     return false;
-    // }
-    Client.checkForName(formText)
-    console.log("::: Form Submitted :::")
 
+    // Client.checkForName(formText)
+    Client.urlChecker(formText)
     fetch('http://localhost:8081/test',{
       method: 'POST', 
       credentials: 'same-origin',
@@ -20,15 +13,15 @@ function handleSubmit(event) {
     })
     .then(res => res.json())
     .then(res => {
-        document.querySelector('#results').innerHTML = res.text;
-        console.log(res)
+      document.querySelector('#formResult').innerHTML = "Form Results";
+      document.querySelector('#polarity').innerHTML = `Polarity: ${res.polarity}`;
+      document.querySelector('#polarity_confidence').innerHTML = `Polarity Confidence: ${res.polarity_confidence}`;
+      document.querySelector('#subjectivity').innerHTML = `Subjectivity: ${res.subjectivity}`;
+      document.querySelector('#subjectivity_confidence').innerHTML = `Subjectivity Confidence: ${res.subjectivity_confidence}`;
+      document.querySelector('#text').innerHTML = `Text: ${res.text}`;
     })
     .catch(error => {
-      let errorMes = "Something went wrong, check again"
-      document.querySelector('#results').innerHTML = errorMes;
-      console.log(error)
+      document.querySelector('#error').innerHTML = "Something went wrong, check again";
     })
 }
-// https://www.cnbc.com/2020/07/08/viacomcbs-reaches-deal-to-stream-uefa-champions-league-matches.html
 export { handleSubmit }
-/* <script type="text/javascript" src="../../../dist/main.js"></script> */

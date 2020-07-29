@@ -1,6 +1,15 @@
   
 header {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 40px;
+    justify-content: center;
+    padding: 70px 40px;
+}
+
+.logo{
+    font-size: 40px;
+}
+.disc{
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
 }

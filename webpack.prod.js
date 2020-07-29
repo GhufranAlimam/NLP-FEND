@@ -1,6 +1,8 @@
 const path = require("path")
 const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WorkboxPlugin = require('workbox-webpack-plugin');
+new WorkboxPlugin.GenerateSW()
 module.exports = {
     entry: './app/client/index.js',
     mode: "production",
